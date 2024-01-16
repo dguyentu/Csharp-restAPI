@@ -71,3 +71,4 @@
 /Users/dantu/dotnet-course-code/DotnetAPI/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.Abstractions.dll
 /Users/dantu/dotnet-course-code/DotnetAPI/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.Relational.dll
 /Users/dantu/dotnet-course-code/DotnetAPI/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.SqlServer.dll
+/Users/dantu/dotnet-course-code/DotnetAPI/obj/Debug/net8.0/DotnetAPI.sourcelink.json

@@ -22,16 +22,17 @@ public class UserEFController : ControllerBase
         }));
     }
 
-
+    // get all records from the table TutorialAppSchema.Users
     [HttpGet("GetUsers")]
-    public IEnumerable<User> GetUsers()
+    public IEnumerable<User> GetUsersEF()
     {
         IEnumerable<User> users = _entityFramework.Users.ToList<User>();
         return users;
     }
 
+    // get a single record from the table TutorialAppSchema.Users
     [HttpGet("GetSingleUser/{userId}")]
-    public User GetSingleUser(int userId)
+    public User GetSingleUserEF(int userId)
     {
         User? user = _entityFramework.Users
             .Where(u => u.UserId == userId)
@@ -43,9 +44,28 @@ public class UserEFController : ControllerBase
         throw new Exception("failed to get user. they do not exist as a record in db");
     }
 
+    // get a single record from the table TutorialAppSchema.UserSalary
+    // [HttpGet("GetUserSalary/{userId}")]
+    // public IEnumerable<UserSalary> GetUserSalaryEF(int userId)
+    // {
+    //     return _entityFramework.UserSalary
+    //         .Where(u => u.UserId == userId)
+    //         .ToList();
+    // }
 
+    [HttpGet("GetUserSalary/{userId}")]
+    public IEnumerable<UserSalary> GetUserSalaryEF(int userId)
+    {
+        IEnumerable<UserSalary> UserSalary = _entityFramework.UserSalary
+        .Where(u => u.UserId == userId)
+            .ToList<UserSalary>();
+        return UserSalary;
+
+    }
+
+    // edit a single record from the table TutorialAppSchema.Users
     [HttpPut("EditUser")]
-    public IActionResult EditUser(User user)
+    public IActionResult EditUserEF(User user)
     {
         User? userDb = _entityFramework.Users
             .Where(u => u.UserId == user.UserId)
@@ -67,8 +87,9 @@ public class UserEFController : ControllerBase
         throw new Exception("failed to get user. they do not exist as a record in db");
     }
 
+    // add a single record from the table TutorialAppSchema.Users
     [HttpPost("AddUser")]
-    public IActionResult AddUser(UserToAddDto user)
+    public IActionResult AddUserEF(UserToAddDto user)
     {
         User userDb = _mapper.Map<User>(user);
 
@@ -82,8 +103,9 @@ public class UserEFController : ControllerBase
 
     }
 
+    // delete a single record from the table TutorialAppSchema.Users
     [HttpDelete("DeleteUser/(userId)")]
-    public IActionResult DeleteUser(int userId)
+    public IActionResult DeleteUserEF(int userId)
     {
         User? userDb = _entityFramework.Users
        .Where(u => u.UserId == userId)
