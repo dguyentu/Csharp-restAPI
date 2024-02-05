@@ -3,6 +3,7 @@ using DotnetAPI.Models;
 using DotnetAPI.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace DotnetAPI.Controllers;
 
@@ -63,7 +64,41 @@ public class UserEFController : ControllerBase
 
     }
 
-    // edit a single record from the table TutorialAppSchema.Users
+    // post a single new record to the table TutorialAppSchema.UserSalary
+    [HttpPost("UserSalary")]
+    public IActionResult PostUserSalaryEF(UserSalary userForInsert)
+    {
+        _entityFramework.UserSalary.Add(userForInsert);
+        if (_entityFramework.SaveChanges() > 0)
+        {
+            return Ok();
+        }
+        throw new Exception("Adding user salary failed on save. Double check the user entered.");
+    }
+
+    // edit a single user salary record that already exsists in TutorialAppSchema.UserSalary
+    [HttpPut("UserSalary")]
+    public IActionResult PutUserSalaryEF(UserSalary userForUpdate)
+    {
+        UserSalary? userToUpdate = _entityFramework.UserSalary
+            .Where(u => u.UserId == userForUpdate.UserId)
+            .FirstOrDefault<UserSalary>();
+
+        if (userToUpdate != null)
+        {
+            userToUpdate.Salary = userForUpdate.Salary;
+            if (_entityFramework.SaveChanges() > 0)
+            {
+                return Ok();
+            }
+            throw new Exception("Updating user salary failed on save. Double check the user entered.");
+
+        }
+        throw new Exception("Failed to find user salary on save. Double check the user entered.");
+    }
+
+
+    // edit a single user record from the table TutorialAppSchema.Users
     [HttpPut("EditUser")]
     public IActionResult EditUserEF(User user)
     {

@@ -92,6 +92,30 @@ public class UserController : ControllerBase
         throw new Exception("failed to update user");
     }
 
+    // add a single user salary record to table TutorialAppSchema.UserSalary
+    [HttpPost("AddUserSalary")]
+    public IActionResult AddUserSalary(UserSalary userSalaryToAdd)
+    {
+        string sql = @"
+            
+            INSERT INTO TutorialAppSchema.UserSalary(
+                [UserId]
+                ,[Salary]
+            ) VALUES (" +
+                "'" + userSalaryToAdd.UserId +
+                "', '" + userSalaryToAdd.Salary +
+            "')";
+        Console.WriteLine(sql);
+
+        if (_dapper.ExecuteSql(sql))
+        {
+            return Ok();
+        }
+
+        throw new Exception("failed to add user salary record");
+    }
+
+
     // edit a single record from the table TutorialAppSchema.UserSalary
     [HttpPut("EditUserSalary")]
     public IActionResult EditUserSalary(UserSalary userSalary)

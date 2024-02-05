@@ -37,6 +37,7 @@ namespace DotnetAPI.Data
                 .HasKey(u => u.UserId);
 
             modelBuilder.Entity<UserSalary>()
+            .ToTable("UserSalary", "TutorialAppSchema")
             .HasKey(u => u.UserId);
 
             modelBuilder.Entity<UserJobInfo>()
